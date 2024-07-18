@@ -1,0 +1,8 @@
+version: "3"
+services:
+  stormserver:
+    build:
+      context: src/
+      dockerfile: dev.dockerfile
+    ports:
+      - 8000:8000

@@ -1,9 +1,9 @@
 import json
 from collections import OrderedDict
-from os import rmdir, getenv
+from os import rmdir, environ
 def parse_file(topic: str):
     content = []
-    folder_path = f"{getenv('OUTPUT_DIR')}/{topic.replace(' ', '_').lower()}"
+    folder_path = f"{environ.get('OUTPUT_DIR')}/{topic.replace(' ', '_').lower()}"
     with open(f"{folder_path}/storm_gen_article_polished.txt", "r+") as f:
         content.append(str(f.read()))
     escapable_str_with_comma = "\",\""

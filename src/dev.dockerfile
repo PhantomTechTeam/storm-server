@@ -10,4 +10,4 @@ RUN conda update --name base conda &&\
     conda env create --file environment.yaml
 SHELL ["conda", "run", "--name", "app", "/bin/bash", "-c"]
 
-ENTRYPOINT ["conda", "run", "--name", "app", "python", "main.py"]
+ENTRYPOINT ["uvicorn", "main:app", "--host", "0.0.0.0", "--reload-dir", "src/"]

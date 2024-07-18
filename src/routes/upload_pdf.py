@@ -1,22 +1,41 @@
 import uuid
 from os import environ, rmdir, mkdir
-def create_markdown(content: str, filename_str: str):
-    pass
+import markdown
+from xhtml2pdf import pisa
+from io import BytesIO
+import shutil
+
+def create_pdf(content: str, filepath: str):
+    with open(f"{filepath}.md", "w+", encoding="utf8") as file:
+        file.writelines(content)
+    html_content = markdown.markdownFromFile(input=f"{filepath}.md", output=f"{filepath}.html")
+    with open(f"{filepath}.html", "r", encoding="utf-8") as file:
+        # Read the content of the file and store it as a string
+        html_content = file.read()
+
+    # Create a BytesIO object to store the PDF output
+    pdf_output = BytesIO()
+
+    # Convert the HTML content to a PDF document
+    pisa.CreatePDF(html_content, dest=pdf_output, encoding='utf-8')
+    with open(f"{filepath}.pdf", "wb") as pdf_file:
+        # Write the PDF content to the file
+        pdf_file.write(pdf_output.getvalue())
+
 def upload_pdf(content: str, user_id: str, topic: str):
-    from ..configs.supabase import supabase_client, supabase_bucket
-    import pymupdf4llm
+    mkdir(str(environ.get("PDF_STORAGE")))
     random_uuid = uuid.uuid4()
     topic_updated = topic.replace(" ", "_").lower()
-    base_path = f"{environ.get('PDF_STORAGE')}/{user_id}"
-    mkdir(base_path)
-    md_text = pymupdf4llm.to_markdown(f"{base_path}/{topic_updated}_{random_uuid}.pdf")
+    pdf_path = f"{environ.get('PDF_STORAGE')}/{topic_updated}_{random_uuid}.pdf"
+    pdf_name = f"{topic_updated}_{random_uuid}.pdf"
+    pdf_filepath = f"{environ.get('PDF_STORAGE')}/{topic_updated}_{random_uuid}"
+    create_pdf(content, pdf_filepath)
 
-    # now work with the markdown text, e.g. store as a UTF8-encoded file
-    import pathlib
-    pathlib.Path(f"{base_path}/{topic_updated}_{random_uuid}.md").write_bytes(md_text.encode())
+    from configs.supabase import supabase_client, supabase_bucket
+    with open(f"{pdf_filepath}.pdf", 'rb') as f:
+        supabase_client.storage.from_(supabase_bucket).upload(file=f,path=f"{user_id}/{pdf_name}", file_options={"content-type": "application/pdf"})
 
-
-    with open(f"{base_path}/{topic_updated}_{random_uuid}.pdf", 'rb') as f:
-        supabase_client.storage.from_(supabase_bucket).upload(file=f,path=f"{user_id}/wikipedia-articles/", file_options={"content-type": "application/pdf"})
-
-    # rmdir(f"{base_path}/{topic_updated}")
+    shutil.rmtree(f"{environ.get('PDF_STORAGE')}")
+    public_url = supabase_client.storage.from_(supabase_bucket).get_public_url(f"{user_id}/{pdf_name}")
+    data = {"public_url": public_url}
+    return data

@@ -1,9 +1,9 @@
 import json
 from collections import OrderedDict
-from os import rmdir
+from os import rmdir, getenv
 def parse_file(topic: str):
     content = []
-    folder_path = f".results/gpt/{topic.replace(' ', '_').lower()}"
+    folder_path = f"{getenv('OUTPUT_DIR')}/{topic.replace(' ', '_').lower()}"
     with open(f"{folder_path}/storm_gen_article_polished.txt", "r+") as f:
         content.append(str(f.read()))
     escapable_str_with_comma = "\",\""
@@ -24,5 +24,5 @@ def parse_file(topic: str):
         "content": final_results,
         "urls_to_unified_index": OrderedDict(sorted(urls_to_unified_indexes.items()))
     }
-    rmdir(folder_path)
+    # rmdir(folder_path)
     return result

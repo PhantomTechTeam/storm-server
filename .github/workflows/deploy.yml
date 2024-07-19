@@ -19,7 +19,7 @@ jobs:
           DH_REPO: "${{ secrets.DH_REPO }}"
           GITHUB_SHA: "${{ github.sha }}"
         run: |
-          docker buildx build --tag $DH_REPO:$GITHUB_SHA -f ./dockerfile .
+          docker buildx build --tag $DH_REPO:$GITHUB_SHA -f ./prod.dockerfile .
       - name: Docker push Storm server
         env:
           DH_REPO: "${{ secrets.DH_REPO }}"

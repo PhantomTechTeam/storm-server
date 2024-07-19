@@ -1,11 +1,18 @@
-FROM  continuumio/miniconda3
-RUN apt update
+# Use an official Python runtime as a base image
+FROM python:3.10-slim as builder
 
-ENV APP_HOME /app
-WORKDIR $APP_HOME
-COPY ./src $APP_HOME
+RUN apt-get update &&  \
+    apt-get install -y libpq-dev gcc
 
-RUN conda update --name base conda &&\
-    conda env create --file storm_environment.yaml
+# Set the working directory in the container
+WORKDIR /app
 
+# Copy the current directory contents into the container at /app
+COPY ./src /app
+
+# Install any needed packages specified in requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
+# Run app.py when the container launches
 RUN ["uvicorn", "main:app", "--host", "0.0.0.0", "--reload-dir", "src/"]
+
+EXPOSE 5000

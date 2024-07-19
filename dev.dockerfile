@@ -1,5 +1,7 @@
 # Use an official Python runtime as a base image
-FROM alpine:
+FROM python:3.11-slim as builder
+
+ENV PYTHONUNBUFFERED 1
 
 RUN apt-get update &&  \
     apt-get install -y libpq-dev gcc

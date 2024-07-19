@@ -13,6 +13,6 @@ COPY ./src /app
 # Install any needed packages specified in requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
 # Run app.py when the container launches
-RUN ["uvicorn", "main:app", "--host", "0.0.0.0", "--reload-dir", "src/"]
+RUN ["uvicorn", "main:app", "--host", "0.0.0.0", "--reload-dir", "/app"]
 
 EXPOSE 5000

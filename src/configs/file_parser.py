@@ -1,9 +1,12 @@
 import json
 from collections import OrderedDict
-from os import rmdir, environ
+from os import rmdir, environ, getcwd
 def parse_file(topic: str):
+    print(getcwd())
     content = []
-    folder_path = f"{environ.get('OUTPUT_DIR')}/{topic.replace(' ', '_').lower()}"
+    updated_topic = topic.replace(" ", "_").replace("-", "_").lower()
+    folder_path = f"{environ.get('OUTPUT_DIR')}/{updated_topic}"
+    print(folder_path)
     with open(f"{folder_path}/storm_gen_article_polished.txt", "r+") as f:
         content.append(str(f.read()))
     escapable_str_with_comma = "\",\""
@@ -24,5 +27,6 @@ def parse_file(topic: str):
         "content": final_results,
         "urls_to_unified_index": OrderedDict(sorted(urls_to_unified_indexes.items()))
     }
+    print(result)
     # rmdir(folder_path)
     return result

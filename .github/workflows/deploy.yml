@@ -1,8 +1,10 @@
-name: Deploy to Docker
+name: Deploy Storm server to Docker
 # Deploys data based off master branch
 on:
   push:
     branches: [main]
+    paths:
+      - src/**
 jobs:
   Dockerizing:
     runs-on: ubuntu-latest

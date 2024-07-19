@@ -1,0 +1,5 @@
+{
+  "name": "storm-devcontainer",
+  "image": "zenith110/storm-devcontainer",
+  "initalizeCommand": "docker pull zenith110/storm-devcontainer "
+}

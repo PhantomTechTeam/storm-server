@@ -45,6 +45,8 @@ jobs:
           docker push $DH_REPO:latest
 
   DeployToLKS:
+    needs: [Dockerizing]
+    if: success('Dockerizing')
     runs-on: "ubuntu-latest"
     steps:
       - uses: actions/checkout@v1

@@ -62,3 +62,13 @@ make create-cluster
 ```
 Let it finish setting up the cluster, and importing the images + helm chart. Once done, you can run kubectl get pods to see the api server running successfully.
 
+## Citations
+```bibtex
+@inproceedings{shao2024assisting,
+      title={{Assisting in Writing Wikipedia-like Articles From Scratch with Large Language Models}}, 
+      author={Yijia Shao and Yucheng Jiang and Theodore A. Kanell and Peter Xu and Omar Khattab and Monica S. Lam},
+      year={2024},
+      booktitle={Proceedings of the 2024 Conference of the North American Chapter of the Association for Computational Linguistics: Human Language Technologies, Volume 1 (Long and Short Papers)}
+}
+```
+

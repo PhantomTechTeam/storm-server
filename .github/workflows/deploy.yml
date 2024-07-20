@@ -16,7 +16,7 @@ jobs:
           DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
         run: |
           docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
-      
+
       - name: Dockerize Storm-Server SHA
         env:
           DH_REPO: "${{ secrets.DH_REPO }}"
@@ -41,3 +41,34 @@ jobs:
           DH_REPO: "${{ secrets.DH_REPO }}"
         run: |
           docker push $DH_REPO:latest
+
+  DeploytoLKS:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Update values
+        env:
+          LINODE_TOKEN: "${{ secrets.LINODE_TOKEN }}"
+          PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
+          PULUMI_ROOT: "phantomtech-pulumi"
+        run: |
+          go mod download
+          echo "::add-mask::$LINODE_TOKEN"
+          pulumi config set linode:token $LINODE_TOKEN --secret
+          cd ../
+      - name: 'Deploy'
+        uses: 'deliverybot/helm@v1'
+        with:
+          release: 'storm-server'
+          namespace: 'videovault.ai'
+          chart: './production/production-helm-chart'
+          token: '${{ github.token }}'
+          values: |
+            name: foobar
+          value-files: >-
+          [
+            "values.yaml",
+            "values.production.yaml"
+          ]
+        env:
+          KUBECONFIG_FILE: '${{ secrets.KUBECONFIG }}'

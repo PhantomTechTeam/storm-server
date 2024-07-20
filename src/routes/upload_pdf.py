@@ -1,10 +1,9 @@
 import uuid
-from os import environ, rmdir, mkdir
+from os import environ, mkdir, path
 import markdown
 from xhtml2pdf import pisa
 from io import BytesIO
 import shutil
-
 def create_pdf(content: str, filepath: str):
     with open(f"{filepath}.md", "w+", encoding="utf8") as file:
         file.writelines(content)
@@ -23,10 +22,15 @@ def create_pdf(content: str, filepath: str):
         pdf_file.write(pdf_output.getvalue())
 
 def upload_pdf(content: str, user_id: str, topic: str):
-    mkdir(str(environ.get("PDF_STORAGE")))
+    folder_path = f'{environ.get("PDF_STORAGE")}/{topic}'
+    if(path.isdir(folder_path)):
+        shutil.rmtree(folder_path)
+        mkdir(str(folder_path))
+    
+    mkdir(str(folder_path))
     random_uuid = uuid.uuid4()
     topic_updated = topic.replace(" ", "_").lower()
-    pdf_path = f"{environ.get('PDF_STORAGE')}/{topic_updated}_{random_uuid}.pdf"
+    
     pdf_name = f"{topic_updated}_{random_uuid}.pdf"
     pdf_filepath = f"{environ.get('PDF_STORAGE')}/{topic_updated}_{random_uuid}"
     create_pdf(content, pdf_filepath)
@@ -35,7 +39,7 @@ def upload_pdf(content: str, user_id: str, topic: str):
     with open(f"{pdf_filepath}.pdf", 'rb') as f:
         supabase_client.storage.from_(supabase_bucket).upload(file=f,path=f"{user_id}/{pdf_name}", file_options={"content-type": "application/pdf"})
 
-    shutil.rmtree(f"{environ.get('PDF_STORAGE')}")
+    shutil.rmtree(folder_path)
     public_url = supabase_client.storage.from_(supabase_bucket).get_public_url(f"{user_id}/{pdf_name}")
     data = {"public_url": public_url}
     return data

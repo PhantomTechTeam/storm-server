@@ -18,7 +18,20 @@ DevContainers - Allows a docker image to be loaded, acting as an ethermal enviro
 ### Docker Compose
 To run using Docker compose, make sure both [Docker](https://www.docker.com/) and [Docker Compose](https://docs.docker.com/compose/install/) are both installed and properly running.
 
-Update dev_docker_compose.yaml environment variables with the various keys and variables needed.
+Create an env using this structure:
+```bash
+OPENAI_API_KEY=<OPENAI_KEY>
+YDC_API_KEY=<YOUCOM_KEY>
+MAX_THREAD_NUM=3
+MAX_CONV_TURN=3
+MAX_PERSPECTIVE=3
+SEARCH_TOP_K=3
+OUTPUT_DIR=/opt/results
+PDF_STORAGE=/opt/pdf
+SUPABASE_URL=<SUPABASE_URL>
+SUPABASE_KEY=<SUPABASE_SUBSCRIPTION_KEY>
+SUPABASE_BUCKET=<SUPABASE_PUBLIC_BUCKET>
+```
 
 Run the following command:
 ```sh
@@ -27,7 +40,12 @@ docker compose -f dev_docker_compose.yaml up --build
 
 This will spin up the server, and will listen to your localhost instance on port 8000.
 
-Navigate to localhost:8000/docs to see the routes
+Navigate to localhost:8000/docs to see the routes. 
+
+Run /create-wiki-article to create an article based off a topic, currently this uses chatgpt 3.5-turbo but will be updated in the future.
+
+Run /create-pdf using the content portion of the previous api call to create a pdf that will be updated to supabase storage.
+
 
 ## Credits
 This project wouldn't be possible without the [storm team](https://github.com/stanford-oval/storm) who created and maintain the python package.
@@ -42,5 +60,5 @@ Once it has been set up, click on the bash terminal to open up an ohmyzash insta
 ```bash
 make create-cluster
 ```
-Let it finish setting up the cluster, and importing the images + manifests. Once done, you can run kubectl get pods to see the api server running successfully.
+Let it finish setting up the cluster, and importing the images + helm chart. Once done, you can run kubectl get pods to see the api server running successfully.
 

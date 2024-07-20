@@ -4,5 +4,13 @@ services:
     build:
       context: ./
       dockerfile: dev.dockerfile
+    env_file:
+      - .env
     ports:
       - 8000:8000
+    volumes:
+      - output_dir:/opt/results
+      - pdf_storage_dir:/opt/pdf
+volumes:
+  output_dir:
+  pdf_storage_dir:

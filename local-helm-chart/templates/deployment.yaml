@@ -32,6 +32,79 @@ spec:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
         - name: {{ .Chart.Name }}
+          env:
+            - name: OPENAI_API_KEY
+              valueFrom: 
+                secretKeyRef: 
+                  key: OpenAPIKey
+                  name: environments
+            
+            - name: YDC_API_KEY
+              valueFrom: 
+                secretKeyRef: 
+                  key: YouComKey
+                  name: environments
+
+            - name: OUTPUT_DIR
+              valueFrom: 
+                secretKeyRef: 
+                  key: OutputDir
+                  name: environments
+
+            - name: PDF_STORAGE
+              valueFrom: 
+                secretKeyRef: 
+                  key: PDFStorageDir
+                  name: environments
+            
+            - name: SUPABASE_URL
+              valueFrom: 
+                secretKeyRef: 
+                  key: SupabaseUrl
+                  name: environments
+            
+            - name: SUPABASE_KEY
+              valueFrom: 
+                secretKeyRef: 
+                  key: SupabaseKey
+                  name: environments
+            
+            - name: SUPABASE_BUCKET
+              valueFrom: 
+                secretKeyRef: 
+                  key: SupabaseBucket
+                  name: environments
+            
+            - name: ORIGINS
+              valueFrom: 
+                secretKeyRef: 
+                  key: Origins
+                  name: environments
+            
+            - name: MAX_THREAD_NUM
+              valueFrom: 
+                secretKeyRef: 
+                  key: MaxThreadNumber
+                  name: environments
+            
+            - name: MAX_CONV_TURN
+              valueFrom: 
+                secretKeyRef: 
+                  key: MaxConversationTurn
+                  name: environments
+            
+            - name: MAX_PERSPECTIVE
+              valueFrom: 
+                secretKeyRef: 
+                  key: MaxPerspective
+                  name: environments
+            
+            - name: SEARCH_TOP_K
+              valueFrom: 
+                secretKeyRef: 
+                  key: SearchTopK
+                  name: environments
+          
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"

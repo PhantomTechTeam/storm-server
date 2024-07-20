@@ -42,33 +42,36 @@ jobs:
         run: |
           docker push $DH_REPO:latest
 
-  DeploytoLKS:
-    runs-on: ubuntu-latest
+  DeployToLKS:
+    runs-on: "ubuntu-latest"
     steps:
-      - uses: actions/checkout@v2
-      - name: Update values
+      - uses: actions/checkout@v1
+      - name: Set up environment variables
         env:
-          LINODE_TOKEN: "${{ secrets.LINODE_TOKEN }}"
-          PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
-          PULUMI_ROOT: "phantomtech-pulumi"
+          OPENAI_API_KEY: "${{ secrets.OPENAI_API_KEY }}"
+          SUPABASE_BUCKET: "${{ secrets.SUPABASE_BUCKET }}"
+          SUPABASE_KEY: "${{ secrets.SUPABASE_KEY }}"
+          SUPABASE_URL: "${{ secrets.SUPABASE_URL }}"
+          YDC_API_KEY: "${{ secrets.YDC_API_KEY }}"
         run: |
-          go mod download
-          echo "::add-mask::$LINODE_TOKEN"
-          pulumi config set linode:token $LINODE_TOKEN --secret
-          cd ../
-      - name: 'Deploy'
-        uses: 'deliverybot/helm@v1'
+          echo "::add-mask::$OPENAI_API_KEY"
+          echo "::add-mask::$SUPABASE_BUCKET"
+          echo "::add-mask::$SUPABASE_KEY"
+          echo "::add-mask::$SUPABASE_URL"
+          echo "::add-mask::$YDC_API_KEY"
+      - name: "Deploy"
+        uses: "deliverybot/helm@v1"
         with:
-          release: 'storm-server'
-          namespace: 'videovault.ai'
-          chart: './production/production-helm-chart'
-          token: '${{ github.token }}'
+          release: "storm-server"
+          namespace: "videovault"
+          chart: "./production/production-helm-chart"
+          token: "${{ github.token }}"
           values: |
-            name: foobar
-          value-files: >-
-          [
-            "values.yaml",
-            "values.production.yaml"
-          ]
+            secret.openAPIKey: $OPENAI_API_KEY
+            secret.youComKey: $YDC_API_KEY
+            secret.supabaseUrl: $SUPABASE_URL
+            secret.supabaseKey: $SUPABASE_KEY
+            secret.supabaseBucket: $SUPABASE_BUCKET
+          value-files: "production/production-helm-chart/values.yaml"
         env:
-          KUBECONFIG_FILE: '${{ secrets.KUBECONFIG }}'
+          KUBECONFIG_FILE: "${{ secrets.KUBECONFIG }}"

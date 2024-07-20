@@ -28,10 +28,12 @@ serviceAccount:
 podAnnotations: {}
 podLabels: {}
 
-podSecurityContext: {}
+podSecurityContext:
+  {}
   # fsGroup: 2000
 
-securityContext: {}
+securityContext:
+  {}
   # capabilities:
   #   drop:
   #   - ALL
@@ -57,7 +59,8 @@ ingress:
   #    hosts:
   #      - chart-example.local
 
-resources: {}
+resources:
+  {}
   # We usually recommend not to specify default resources and to leave this as a conscious
   # choice for the user. This also increases chances charts run on environments with little
   # resources, such as Minikube. If you do want to specify resources, uncomment the following
@@ -85,9 +88,8 @@ volumes:
     emptyDir:
       sizeLimit: 500Mi
 
-
 # Additional volumeMounts on the output Deployment definition.
-volumeMounts: 
+volumeMounts:
   - name: results
     mountPath: "/etc/results"
     readOnly: false
@@ -98,7 +100,7 @@ volumeMounts:
 secrets:
   openAPIKey: ""
   youComKey: ""
-  maxThreadNumber:  3
+  maxThreadNumber: 3
   maxConversationTurn: 3
   maxPerspective: 3
   searchTopK: 3
@@ -106,7 +108,7 @@ secrets:
   pdfStorageDir: "/etc/pdfs"
   supabaseUrl: ""
   supabaseKey: ""
-  supabaseBucket: "pdfs"
+  supabaseBucket: ""
 
 origins:
   - https://videovault.ai

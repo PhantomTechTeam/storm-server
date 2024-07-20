@@ -16,15 +16,28 @@ jobs:
           DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
         run: |
           docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
-      - name: Dockerize Storm-Server
+      
+      - name: Dockerize Storm-Server SHA
         env:
           DH_REPO: "${{ secrets.DH_REPO }}"
           GITHUB_SHA: "${{ github.sha }}"
         run: |
           docker buildx build --tag $DH_REPO:$GITHUB_SHA -f ./prod.dockerfile .
+
       - name: Docker push Storm server
         env:
           DH_REPO: "${{ secrets.DH_REPO }}"
           GITHUB_SHA: "${{ github.sha }}"
         run: |
           docker push $DH_REPO:$GITHUB_SHA
+
+      - name: Dockerize Storm-Server
+        env:
+          DH_REPO: "${{ secrets.DH_REPO }}"
+        run: |
+          docker buildx build --tag $DH_REPO:latest -f ./prod.dockerfile .
+      - name: Docker push Storm server
+        env:
+          DH_REPO: "${{ secrets.DH_REPO }}"
+        run: |
+          docker push $DH_REPO:latest

@@ -12,6 +12,8 @@ build-import:
 	@echo "Finished creating $(IMAGE_NAME) docker image!"
 	@echo "Importing into k3d now!"
 	k3d image import $(IMAGE_NAME) -c $(CLUSTER_NAME)
+	helm upgrade storm-server ./local-helm-chart
+	# kubectl port-forward deployments/storm-server-helm-chart 8000:8000
 
 create-cluster:
 	@echo "Creating cluster $(CLUSTER_NAME)!"
@@ -21,7 +23,14 @@ create-cluster:
 	@echo "Finished creating $(IMAGE_NAME) docker image!"
 	@echo "Importing into k3d now!"
 	k3d image import $(IMAGE_NAME) -c $(CLUSTER_NAME)
+	helm install storm-server ./local-helm-chart
+	kubectl port-forward deployments/storm-server-helm-chart 8000:8000
 
 delete-cluster:
 	@echo "Removing cluster $(CLUSTER_NAME) now!"
 	k3d cluster delete -c $(CLUSTER)
+	helm uninstall storm-server
+
+port-forward:
+	helm upgrade storm-server ./local-helm-chart
+	kubectl port-forward deployments/storm-server-helm-chart 8000:8000

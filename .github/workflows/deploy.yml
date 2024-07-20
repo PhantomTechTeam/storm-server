@@ -5,6 +5,7 @@ on:
     branches: [main]
     paths:
       - src/**
+      - production/**
 jobs:
   Dockerizing:
     runs-on: ubuntu-latest

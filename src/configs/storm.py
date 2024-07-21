@@ -12,6 +12,7 @@ def setup_storm_engine_args(args: dict[str, str], topic: str):
     if(path.isdir(output_dir)):
         rmtree(output_dir)
         mkdir(output_dir)
+    mkdir(output_dir)
     # Check out the STORMWikiRunnerArguments class for more configurations.
     engine_args = STORMWikiRunnerArguments(
         output_dir=str(output_dir),

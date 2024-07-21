@@ -4,7 +4,7 @@ def create_article(topic: str):
     openai.setup_gpt_3_5(open_ai_kwargs)
     print("Successfully set up openai!")
     from configs import argparser, you_com, file_parser
-    engine_args = storm.setup_storm_engine_args(argparser.parser)
+    engine_args = storm.setup_storm_engine_args(argparser.parser, topic)
     print("Successfully retrieved engine_args!\n")
     rm = you_com.setup_you_rm(engine_args)
     print("Successfully got rm from you.com!\nRunning runner now!\n")

@@ -4,7 +4,7 @@ from os import environ, listdir
 from shutil import rmtree
 def parse_file(topic: str):
     content = []
-    updated_topic = topic.replace(' ', '_')
+    updated_topic = topic.replace(' ', '_').lower()
     output_dir = environ.get('OUTPUT_DIR')
     folder_path = f"{output_dir}/{updated_topic}"
     for file in listdir(folder_path):

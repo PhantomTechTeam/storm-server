@@ -19,7 +19,7 @@ def setup_storm_engine_args(args: dict[str, str], topic: str):
 def run_runner(topic: str, engine_args, rm):
     runner = STORMWikiRunner(engine_args, lm_configs, rm)
     runner.run(
-            topic=topic.replace(" ", "_").lower(),
+            topic=topic.lower(),
             do_research=True,
             do_generate_outline=True,
             do_generate_article=True,

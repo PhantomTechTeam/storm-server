@@ -1,13 +1,14 @@
 import json
 from collections import OrderedDict
-from os import environ
+from os import environ, listdir
 from shutil import rmtree
 def parse_file(topic: str):
     content = []
     updated_topic = topic.replace(" ", "_").replace("-", "_").lower()
-    
+
     folder_path = f"{environ.get('OUTPUT_DIR')}/{updated_topic}"
-    
+    for file in listdir(folder_path):
+        print(f"file is {file}")
     with open(f"{folder_path}/storm_gen_article_polished.txt", "r+") as f:
         content.append(str(f.read()))
     escapable_str_with_comma = "\",\""

@@ -9,7 +9,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
 
-origins = environ.get("ORIGINS")
+origins = str(environ.get("ORIGINS")).split(",")
 
 app.add_middleware(
     CORSMiddleware,

@@ -5,8 +5,8 @@
 replicaCount: 1
 
 image:
-  repository: storm-server
-  pullPolicy: IfNotPresent
+  repository: zenith110/storm-server
+  pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
   tag: "latest"
 
@@ -108,10 +108,8 @@ secrets:
   pdfStorageDir: "/etc/pdfs"
   supabaseUrl: ""
   supabaseKey: ""
-  supabaseBucket: ""
-
-origins:
-  - https://videovault.ai
+  supabaseBucket: "pdfs"
+  origins: "https://videovault.ai, https://www.videovault.ai"
 
 nodeSelector: {}
 

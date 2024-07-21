@@ -6,13 +6,15 @@ from shutil import rmtree
 lm_configs = STORMWikiLMConfigs()
 
 def setup_storm_engine_args(args: dict[str, str], topic: str):
-    output_dir = f'{args.get("output_dir")}/{topic.replace(' ', '_').lower()}'
+    updated_topic = topic.replace(' ', '_').lower()
+    output_dir_original = args.get("output_dir")
+    output_dir = f"{output_dir_original}/{updated_topic}"
     if(path.isdir(output_dir)):
         rmtree(output_dir)
         mkdir(output_dir)
     # Check out the STORMWikiRunnerArguments class for more configurations.
     engine_args = STORMWikiRunnerArguments(
-        output_dir=str(args.get("output_dir")),
+        output_dir=str(output_dir),
                 max_conv_turn=int(str(args.get("max_conv_turn"))),
                 max_perspective=int(str(args.get("max_perspective"), )),
                 search_top_k=int(str(args.get("search_top_k"))),

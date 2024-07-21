@@ -1,11 +1,11 @@
 import json
 from collections import OrderedDict
-from os import environ, getcwd
+from os import environ
 from shutil import rmtree
 def parse_file(topic: str):
-    print(getcwd())
     content = []
     updated_topic = topic.replace(" ", "_").replace("-", "_").lower()
+    
     folder_path = f"{environ.get('OUTPUT_DIR')}/{updated_topic}"
     
     with open(f"{folder_path}/storm_gen_article_polished.txt", "r+") as f:

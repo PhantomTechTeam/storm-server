@@ -1,10 +1,15 @@
 from knowledge_storm import STORMWikiRunnerArguments, STORMWikiRunner, STORMWikiLMConfigs
-
+from os import path, mkdir
+from shutil import rmtree
 # STORM is a LM system so different components can be powered by different models to reach a good balance between cost and quality.
 # For a good practice, choose a cheaper/faster model for `conv_simulator_lm` which is used to split queries, synthesize answers in the conversation. Choose a more powerful model for `article_gen_lm` to generate verifiable text with citations.
 lm_configs = STORMWikiLMConfigs()
 
-def setup_storm_engine_args(args: dict[str, str]):
+def setup_storm_engine_args(args: dict[str, str], topic: str):
+    output_dir = f'{args.get("output_dir")}/{topic.replace(' ', '_').lower()}'
+    if(path.isdir(output_dir)):
+        rmtree(output_dir)
+        mkdir(output_dir)
     # Check out the STORMWikiRunnerArguments class for more configurations.
     engine_args = STORMWikiRunnerArguments(
         output_dir=str(args.get("output_dir")),

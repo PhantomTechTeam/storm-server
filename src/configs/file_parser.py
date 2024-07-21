@@ -4,8 +4,9 @@ from os import environ, listdir
 from shutil import rmtree
 def parse_file(topic: str):
     content = []
-    
-    folder_path = f"{environ.get('OUTPUT_DIR')/{topic.replace(' ', '_')}}"
+    updated_topic = topic.replace(' ', '_')
+    output_dir = environ.get('OUTPUT_DIR')
+    folder_path = f"{output_dir}/{updated_topic}"
     for file in listdir(folder_path):
         print(f"file is {file}")
     with open(f"{folder_path}/storm_gen_article_polished.txt", "r+") as f:

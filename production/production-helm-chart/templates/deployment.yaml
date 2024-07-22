@@ -34,85 +34,89 @@ spec:
         - name: {{ .Chart.Name }}
           env:
             - name: OPENAI_API_KEY
-              valueFrom: 
-                secretKeyRef: 
+              valueFrom:
+                secretKeyRef:
                   key: OpenAPIKey
                   name: environments
-            
+
             - name: YDC_API_KEY
-              valueFrom: 
-                secretKeyRef: 
+              valueFrom:
+                secretKeyRef:
                   key: YouComKey
                   name: environments
 
             - name: OUTPUT_DIR
-              valueFrom: 
-                secretKeyRef: 
+              valueFrom:
+                secretKeyRef:
                   key: OutputDir
                   name: environments
 
             - name: PDF_STORAGE
-              valueFrom: 
-                secretKeyRef: 
+              valueFrom:
+                secretKeyRef:
                   key: PDFStorageDir
                   name: environments
-            
+
             - name: SUPABASE_URL
-              valueFrom: 
-                secretKeyRef: 
+              valueFrom:
+                secretKeyRef:
                   key: SupabaseUrl
                   name: environments
-            
+
             - name: SUPABASE_KEY
-              valueFrom: 
-                secretKeyRef: 
+              valueFrom:
+                secretKeyRef:
                   key: SupabaseKey
                   name: environments
-            
+
             - name: SUPABASE_BUCKET
-              valueFrom: 
-                secretKeyRef: 
+              valueFrom:
+                secretKeyRef:
                   key: SupabaseBucket
                   name: environments
-            
+
             - name: ORIGINS
-              valueFrom: 
-                secretKeyRef: 
+              valueFrom:
+                secretKeyRef:
                   key: Origins
                   name: environments
-            
+
             - name: MAX_THREAD_NUM
-              valueFrom: 
-                secretKeyRef: 
+              valueFrom:
+                secretKeyRef:
                   key: MaxThreadNumber
                   name: environments
-            
+
             - name: MAX_CONV_TURN
-              valueFrom: 
-                secretKeyRef: 
+              valueFrom:
+                secretKeyRef:
                   key: MaxConversationTurn
                   name: environments
-            
+
             - name: MAX_PERSPECTIVE
-              valueFrom: 
-                secretKeyRef: 
+              valueFrom:
+                secretKeyRef:
                   key: MaxPerspective
                   name: environments
-            
+
             - name: SEARCH_TOP_K
-              valueFrom: 
-                secretKeyRef: 
+              valueFrom:
+                secretKeyRef:
                   key: SearchTopK
                   name: environments
-          
+
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - name: http
-              containerPort: {{ .Values.service.port }}
+              containerPort: 8080
               protocol: TCP
+            - name: https
+              containerPort: 8080
+              protocol: TCP
+
           livenessProbe:
             {{- toYaml .Values.livenessProbe | nindent 12 }}
           readinessProbe:

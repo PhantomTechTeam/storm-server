@@ -1,5 +1,6 @@
 import uuid
-from os import environ, mkdirs, path
+from os import environ, makedirs, path
+import os
 import markdown
 from xhtml2pdf import pisa
 from io import BytesIO
@@ -14,7 +15,6 @@ def create_pdf(content: str, filepath: str):
 
     # Create a BytesIO object to store the PDF output
     pdf_output = BytesIO()
-
     # Convert the HTML content to a PDF document
     pisa.CreatePDF(html_content, dest=pdf_output, encoding='utf-8')
     with open(f"{filepath}.pdf", "wb") as pdf_file:
@@ -26,12 +26,12 @@ def upload_pdf(content: str, user_id: str, topic: str):
     folder_path = f'{environ.get("PDF_STORAGE")}/{topic_updated}'
     if(path.isdir(folder_path)):
         shutil.rmtree(folder_path)
-        mkdirs(str(folder_path))
-    
-    mkdirs(str(folder_path))
+        makedirs(str(folder_path))
+
+    makedirs(str(folder_path))
     random_uuid = uuid.uuid4()
-    
-    
+
+
     pdf_name = f"{topic_updated}_{random_uuid}.pdf"
     pdf_filepath = f"{environ.get('PDF_STORAGE')}/{topic_updated}_{random_uuid}"
     create_pdf(content, pdf_filepath)

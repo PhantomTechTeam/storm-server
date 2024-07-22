@@ -31,34 +31,36 @@ podLabels: {}
 podSecurityContext:
   {}
   # fsGroup: 2000
+certs:
+  email: ""
+  secretRef: ""
 
-securityContext:
-  {}
-  # capabilities:
-  #   drop:
-  #   - ALL
-  # readOnlyRootFilesystem: true
-  # runAsNonRoot: true
-  # runAsUser: 1000
+securityContext: {}
 
 service:
-  type: ClusterIP
-  port: 8000
+  type: LoadBalancer
+
 
 ingress:
-  enabled: false
+  enabled: true
   className: ""
-  annotations: {}
+  annotations: { cert-manager.io/issuer: "storm-server-http-issuer", traefik.ingress.kubernetes.io/router.tls: "true", ingress.kubernetes.io/ssl-redirect: "true", kubernetes.io/ingress.class: "traefik", ingress.kubernetes.io/force-ssl-redirect: "true", traefik.ingress.kubernetes.io/router.entrypoints: "websecure"}
   hosts:
-    - host: chart-example.local
+    - host: storm-server.videovault.ai
       paths:
         - path: /
-          pathType: ImplementationSpecific
-  tls: []
-  #  - secretName: chart-example-tls
-  #    hosts:
-  #      - chart-example.local
-
+          pathType: Prefix
+    - host: www.storm-server.videovault.ai
+      paths:
+        - path: /
+          pathType: Prefix
+  tls:
+    - secretName: storm-server-http-issuer
+      hosts:
+        - storm-server.videovault.ai
+service:
+  type: ClusterIP
+  port: 8080
 resources:
   {}
   # We usually recommend not to specify default resources and to leave this as a conscious
@@ -108,8 +110,8 @@ secrets:
   pdfStorageDir: "/etc/pdfs"
   supabaseUrl: ""
   supabaseKey: ""
-  supabaseBucket: "pdfs"
-  origins: "https://videovault.ai, https://www.videovault.ai"
+  supabaseBucket: ""
+  origins: "https://videovault.ai,https://www.videovault.ai"
 
 nodeSelector: {}
 

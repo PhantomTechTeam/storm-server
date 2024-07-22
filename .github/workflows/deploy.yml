@@ -24,7 +24,7 @@ jobs:
           DH_REPO: "${{ secrets.DH_REPO }}"
           GITHUB_SHA: "${{ github.sha }}"
         run: |
-          docker buildx build --tag $DH_REPO:$GITHUB_SHA -f ./prod.dockerfile .
+          docker buildx build --tag $DH_REPO:$GITHUB_SHA -f Dockerfile .
 
       - name: Docker push Storm server
         env:
@@ -37,7 +37,7 @@ jobs:
         env:
           DH_REPO: "${{ secrets.DH_REPO }}"
         run: |
-          docker buildx build --tag $DH_REPO:latest -f ./prod.dockerfile .
+          docker buildx build --tag $DH_REPO:latest -f Dockerfile .
       - name: Docker push Storm server
         env:
           DH_REPO: "${{ secrets.DH_REPO }}"

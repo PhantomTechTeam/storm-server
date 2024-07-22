@@ -22,14 +22,15 @@ def create_pdf(content: str, filepath: str):
         pdf_file.write(pdf_output.getvalue())
 
 def upload_pdf(content: str, user_id: str, topic: str):
-    folder_path = f'{environ.get("PDF_STORAGE")}/{topic}'
+    topic_updated = topic.replace(" ", "_").replace("-", "_").lower()
+    folder_path = f'{environ.get("PDF_STORAGE")}/{topic_updated}'
     if(path.isdir(folder_path)):
         shutil.rmtree(folder_path)
         mkdirs(str(folder_path))
     
     mkdirs(str(folder_path))
     random_uuid = uuid.uuid4()
-    topic_updated = topic.replace(" ", "_").lower()
+    
     
     pdf_name = f"{topic_updated}_{random_uuid}.pdf"
     pdf_filepath = f"{environ.get('PDF_STORAGE')}/{topic_updated}_{random_uuid}"

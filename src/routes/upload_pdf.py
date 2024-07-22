@@ -1,5 +1,5 @@
 import uuid
-from os import environ, mkdir, path
+from os import environ, mkdirs, path
 import markdown
 from xhtml2pdf import pisa
 from io import BytesIO
@@ -25,9 +25,9 @@ def upload_pdf(content: str, user_id: str, topic: str):
     folder_path = f'{environ.get("PDF_STORAGE")}/{topic}'
     if(path.isdir(folder_path)):
         shutil.rmtree(folder_path)
-        mkdir(str(folder_path))
+        mkdirs(str(folder_path))
     
-    mkdir(str(folder_path))
+    mkdirs(str(folder_path))
     random_uuid = uuid.uuid4()
     topic_updated = topic.replace(" ", "_").lower()
     

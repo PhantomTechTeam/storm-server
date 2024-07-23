@@ -18,9 +18,14 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-@app.post("/create-wiki-article")
+@app.post("/create-wiki-article/chatgpt35")
 def create_wiki_article(topic_input: TopicInput):
-     json_contents  = create_article.create_article(topic=topic_input.topic)
+     json_contents  = create_article.create_article_chatgpt35(topic=topic_input.topic)
+     return JSONResponse(content=json_contents)
+
+@app.post("/create-wiki-article/claude")
+def create_wiki_article(topic_input: TopicInput):
+     json_contents  = create_article.create_article_anthropic(topic=topic_input.topic)
      return JSONResponse(content=json_contents)
 
 @app.post("/create-pdf")

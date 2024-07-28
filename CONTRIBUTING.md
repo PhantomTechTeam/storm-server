@@ -10,7 +10,15 @@ A prompt asking that a devcontainer is found in the folder will show up, click t
 
 It will take some time for the image to be pulled, after it has been completed ohmyzash will be installed and ready to be used.
 
-Once development 
+The docker-compose file is provided for ease of development.
+
+To utilize it, run this command:
+```sh
+docker-compose -f dev_docker_compose.yaml up --build
+```
+Upon the image being built, docker will now watch for the src directory to be changed then will make the appropriate updates. 
+If env variables are updated or created, the docker process will have to be stopped with ctrl+z then re-ran with the docker-compose up command.
+
 # Project structure
 This project is a FastAPI based project that is contained in the src/ folder and is split into multiple parts.
 | Folder name    | What it does |

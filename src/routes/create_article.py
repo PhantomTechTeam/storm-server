@@ -15,7 +15,7 @@ def create_article(topic: str):
     print(f"All folders are {os.getcwd()}")
     
     
-    current_folder = os.listdir(f'{os.getenv("OUTPUT_DIR")}/{updated_topic}')
+    current_folder = os.listdir(f'{os.getenv("OUTPUT_DIR")}')
     for file in current_folder:
         print(f"files are {file}")
     json_contents = file_parser.parse_file(updated_topic)

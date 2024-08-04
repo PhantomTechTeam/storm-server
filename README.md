@@ -18,7 +18,7 @@ DevContainers - Allows a docker image to be loaded, acting as an ethermal enviro
 ### Docker Compose
 To run using Docker compose, make sure both [Docker](https://www.docker.com/) and [Docker Compose](https://docs.docker.com/compose/install/) are both installed and properly running.
 
-Create an env using this structure:
+Create an env using this structure if using the OpenAI + you.com route:
 ```bash
 OPENAI_API_KEY=<OPENAI_KEY>
 YDC_API_KEY=<YOUCOM_KEY>
@@ -32,6 +32,23 @@ SUPABASE_URL=<SUPABASE_URL>
 SUPABASE_KEY=<SUPABASE_SUBSCRIPTION_KEY>
 SUPABASE_BUCKET=<SUPABASE_PUBLIC_BUCKET>
 ```
+
+Create an env using this structure if using the Anthropic + Serper route: 
+```bash
+OUTPUT_DIR=/opt/results
+PDF_STORAGE=/opt/pdf
+SUPABASE_URL=<SUPABASE_URL>
+SUPABASE_KEY=<SUPABASE_SUBSCRIPTION_KEY>
+SUPABASE_BUCKET=<SUPABASE_PUBLIC_BUCKET>
+ANTHROPIC_API_KEY=<ANTHROPIC_API_KEY>
+ANTHROPIC_SIMULATOR_LM=claude-3-haiku-20240307
+ANTHROPIC_ASKER_LM=claude-3-sonnet-20240229
+ANTHROPIC_GEN_LM=claude-3-opus-20240229
+ANTHROPIC_ARTICLE_GEN_LM=claude-3-opus-20240229
+ANTHROPIC_POLISH_LM=claude-3-opus-20240229
+SERPER_API_KEY=<SERPER_API_KEY>
+```
+
 
 Run the following command:
 ```sh
@@ -62,6 +79,8 @@ make create-cluster
 ```
 Let it finish setting up the cluster, and importing the images + helm chart. Once done, you can run kubectl get pods to see the api server running successfully.
 
+## Where it is being used
+Storm-server 
 ## Citations
 ```bibtex
 @inproceedings{shao2024assisting,

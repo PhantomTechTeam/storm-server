@@ -2,6 +2,7 @@ from os import environ
 from fastapi import FastAPI
 from models.topic import TopicInput
 from models.pdf import PdfInput
+from models.topic_serper import SerperInput
 from routes import create_article, upload_pdf
 from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
@@ -24,8 +25,8 @@ def create_wiki_article(topic_input: TopicInput):
      return JSONResponse(content=json_contents)
 
 @app.post("/create-wiki-article/claude")
-def create_wiki_article(topic_input: TopicInput):
-     json_contents  = create_article.create_article_anthropic(topic=topic_input.topic)
+def create_wiki_article(topic_input: SerperInput):
+     json_contents  = create_article.create_article_anthropic(topic=topic_input.topic, query_params=topic_input.query_params)
      return JSONResponse(content=json_contents)
 
 @app.post("/create-pdf")

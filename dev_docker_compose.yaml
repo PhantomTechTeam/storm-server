@@ -9,8 +9,8 @@ services:
     ports:
       - 8000:8000
     volumes:
-      - output_dir:/opt/results
-      - pdf_storage_dir:/opt/pdf
+      - generated_contents:/opt/results
+      - pdfs:/opt/pdf
 volumes:
-  output_dir:
-  pdf_storage_dir:
+  generated_contents:
+  pdfs:

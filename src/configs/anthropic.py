@@ -10,10 +10,11 @@ class Anthropic:
     self.article_gen_lm = environ.get("ANTHROPIC_ARTICLE_GEN_LM")
     self.polish_lm = environ.get("ANTHROPIC_POLISH_LM")
     claude_kwargs = {
-        'api_key': os.getenv("ANTHROPIC_API_KEY"),
+        'api_key': self.anthropic_api_key,
         'temperature': 1.0,
         'top_p': 0.9
     }
+    
     conv_simulator_lm = ClaudeModel(
         model=self.conv_simulator_lm, max_tokens=500, **claude_kwargs
     )

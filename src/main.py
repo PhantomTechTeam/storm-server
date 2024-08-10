@@ -27,9 +27,9 @@ def create_wiki_article(topic_input: TopicInput):
     return JSONResponse(content=json_contents)
 
 
-@app.post("/create-wiki-article/claude")
+@app.post("/create-wiki-article/serper")
 def create_wiki_article(topic_input: SerperInput):
-    json_contents = create_article.create_article_anthropic(
+    json_contents = create_article.create_article_serper(
         topic=topic_input.topic, query_params=topic_input.query_params
     )
     return JSONResponse(content=json_contents)

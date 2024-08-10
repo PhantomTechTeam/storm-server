@@ -1,19 +1,12 @@
 import json
 from collections import OrderedDict
-from os import environ, listdir
 from shutil import rmtree
 
 
-def parse_file(topic: str):
+def parse_file(output_dir: str):
     content = []
-    updated_topic = topic.replace(" ", "_").lower()
-    output_dir = environ.get("OUTPUT_DIR")
-    folder_path = f"{output_dir}/{updated_topic}"
 
-    for file in listdir(folder_path):
-        print(f"file is {file}")
-
-    with open(f"{folder_path}/storm_gen_article_polished.txt", "r+") as f:
+    with open(f"{output_dir}/storm_gen_article_polished.txt", "r+") as f:
         content.append(str(f.read()))
 
     escapable_str_with_comma = '","'
@@ -29,7 +22,7 @@ def parse_file(topic: str):
         .replace(escapable_str_without_comma, "")
     )
 
-    with open(f"{folder_path}/url_to_info.json", "r+") as f:
+    with open(f"{output_dir}/url_to_info.json", "r+") as f:
         data = json.load(f)
 
     url_unified_index = data.get("url_to_unified_index")
@@ -45,5 +38,5 @@ def parse_file(topic: str):
         "urls_to_unified_index": OrderedDict(sorted(urls_to_unified_indexes.items())),
     }
 
-    rmtree(folder_path)
+    rmtree(output_dir)
     return result

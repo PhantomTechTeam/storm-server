@@ -1,5 +1,5 @@
 from configs import storm
-
+import os
 
 def create_article(topic: str):
     from configs import argparser, you_com, file_parser, openai
@@ -45,7 +45,9 @@ def create_article_serper(topic: str, query_params: dict[str, str]):
     print("Successfully got rm from serper.com!\nRunning runner now!\n")
 
     output_dir = storm.run_runner(topic, engine_args, serper_init.rm)
-
+    files = os.listdir(output_dir)
+    for file in files: 
+        print(f"File: {file} in {output_dir}")
     print("Finished running runner!\nParsing file now to send to frontend!\n")
 
     json_contents = file_parser.parse_file(output_dir)

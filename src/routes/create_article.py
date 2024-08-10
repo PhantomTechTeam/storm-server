@@ -50,7 +50,7 @@ def create_article_serper(topic: str, query_params: dict[str, str]):
         print(f"File: {file} in {output_dir}")
     print("Finished running runner!\nParsing file now to send to frontend!\n")
 
-    json_contents = file_parser.parse_file(output_dir)
+    json_contents = file_parser.parse_file(output_dir, topic, query_params.get("user_id"))
 
     print("Fully parsed file, sending response back!\n")
 

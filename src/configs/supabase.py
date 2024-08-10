@@ -1,7 +1,8 @@
 import os
 from supabase import create_client, Client
 import shutil
-
+import uuid
+from datetime import datetime
 
 class Supabase:
     def __init__(self):
@@ -23,3 +24,18 @@ class Supabase:
             self.supabase_bucket
         ).get_public_url(f"{user_id}/{pdf_name}")
         return public_url
+    def create_article(self, content, topic, user_id, urls_to_unified_index):
+        self.supabase_client.from_("articles").insert(
+            {
+                "content": content,
+                "title": topic,
+                "user_id": user_id,
+                "url_to_unified_index": urls_to_unified_index,
+                "id": uuid.uuid4(),
+                "pdf_url": "",
+                "created_at": datetime.now().isoformat(),
+                "user_id": user_id
+            }
+        )
+
+

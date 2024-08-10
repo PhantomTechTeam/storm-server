@@ -31,12 +31,12 @@ def create_article(topic: str):
 
 def create_article_serper(topic: str, query_params: dict[str, str]):
     from configs import argparser, serper, file_parser, anthropic
-
+    
     anthropic.Anthropic(storm.lm_configs)
 
     print("Successfully set up claude!")
 
-    engine_args = storm.setup_storm_engine_args(argparser.parser, topic)
+    engine_args = storm.setup_storm_engine_args(argparser.parser)
 
     serper_init = serper.Serper(query_params)
 

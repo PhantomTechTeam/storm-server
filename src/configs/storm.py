@@ -9,12 +9,12 @@ from knowledge_storm import (
 lm_configs = STORMWikiLMConfigs()
 
 
-def setup_storm_engine_args(args: dict[str, str], topic: str):
+def setup_storm_engine_args(args: dict[str, str]):
     output_dir_original = args.get("output_dir")
 
     # Check out the STORMWikiRunnerArguments class for more configurations.
     engine_args = STORMWikiRunnerArguments(
-        output_dir=f"{output_dir_original}/{topic}",
+        output_dir=f"{output_dir_original}",
         max_conv_turn=int(str(args.get("max_conv_turn"))),
         max_perspective=int(
             str(

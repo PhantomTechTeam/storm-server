@@ -1,10 +1,9 @@
 import json
 from collections import OrderedDict
 from shutil import rmtree
-from .supabase import SupabaseClient
-import os
 
-def parse_file(output_dir: str, topic: str, user_id: str):
+
+def parse_file(output_dir: str):
     try:
         content = []
 
@@ -34,9 +33,6 @@ def parse_file(output_dir: str, topic: str, user_id: str):
         for url, unified_index in url_unified_index.items():
             if unified_index not in urls_to_unified_indexes.keys():
                 urls_to_unified_indexes[unified_index] = url
-        if(os.environ.get("PDF_STORAGE_SERVICE") == "supabase"):
-            supabase_client = SupabaseClient()
-            supabase_client.create_article(final_results, topic, user_id, OrderedDict(sorted(urls_to_unified_indexes.items())))
         
         result = {
             "content": final_results,
@@ -52,3 +48,7 @@ def parse_file(output_dir: str, topic: str, user_id: str):
             "statusCode": 500
         }
     return result
+
+
+
+    

@@ -3,6 +3,7 @@ from knowledge_storm import (
     STORMWikiRunner,
     STORMWikiLMConfigs,
 )
+import json
 
 # STORM is a LM system so different components can be powered by different models to reach a good balance between cost and quality.
 # For a good practice, choose a cheaper/faster model for `conv_simulator_lm` which is used to split queries, synthesize answers in the conversation. Choose a more powerful model for `article_gen_lm` to generate verifiable text with citations.
@@ -40,3 +41,4 @@ def run_runner(topic: str, engine_args, rm):
     runner.post_run()
     runner.summary()
     return runner.article_output_dir
+

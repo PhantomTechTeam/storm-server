@@ -34,3 +34,6 @@ delete-cluster:
 port-forward:
 	helm upgrade storm-server ./local-helm-chart
 	kubectl port-forward deployments/storm-server-helm-chart 8000:8000
+build:
+	docker-compose -f dev_docker_compose.yaml up --build
+

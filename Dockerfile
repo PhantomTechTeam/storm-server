@@ -29,5 +29,6 @@ COPY --from=builder /opt/venv /opt/venv
 ENV PATH="/opt/venv/bin:$PATH"
 COPY ./src /app/
 
+ENV PYTHONUNBUFFERED=0
 # Run app.py when the container launches
 CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8080"]

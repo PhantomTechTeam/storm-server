@@ -9,5 +9,8 @@ services:
     ports:
       - 8000:8000
     volumes:
-      - ./storm:/opt/results
-      - ./storm/pdfs:/opt/pdf
+      - generated_contents:/opt/results
+      - pdfs:/opt/pdf
+volumes:
+  generated_contents:
+  pdfs:

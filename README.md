@@ -7,8 +7,6 @@ This project is a server based implementation of [storm](https://github.com/stan
 ## Technologies
 FastAPI - Server framework of choice, very simple to set up and getting systems set up.
 
-Conda - Package manager utilized in data science, similar to pip.
-
 Helm - Templating system to help create kubernetes manfiests
 
 Docker - Technology that creates containers that can be deployed to servers or ran within docker-compose to create a isolated network environment.

@@ -33,3 +33,12 @@ def setup_mix_gpt(openai_kwargs):
     lm_configs.set_outline_gen_lm(gpt_4)
     lm_configs.set_article_gen_lm(gpt_4)
     lm_configs.set_article_polish_lm(gpt_4)
+
+
+def setup_gpt_4_o(openai_kwargs):
+    gpt_4 = OpenAIModel(model="gpt-4-o", max_tokens=3000, **openai_kwargs)
+    lm_configs.set_conv_simulator_lm(gpt_4)
+    lm_configs.set_question_asker_lm(gpt_4)
+    lm_configs.set_outline_gen_lm(gpt_4)
+    lm_configs.set_article_gen_lm(gpt_4)
+    lm_configs.set_article_polish_lm(gpt_4)

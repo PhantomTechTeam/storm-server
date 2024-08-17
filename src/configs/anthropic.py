@@ -14,11 +14,10 @@ class Anthropic:
             "temperature": 1.0,
             "top_p": 0.9,
         }
-        
+
         if not self.claude_kwargs["api_key"]:
             raise ValueError("ANTHROPIC_API_KEY environment variable is not set")
-        
-        
+
         self.conv_simulator_lm = ClaudeModel(
             model=self.simulator_lm, max_tokens=500, **self.claude_kwargs
         )

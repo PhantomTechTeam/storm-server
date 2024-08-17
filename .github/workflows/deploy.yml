@@ -6,9 +6,8 @@ on:
     branches: [main]
     paths:
       - src/**
-      - production/**
 jobs:
-  Dockerizing:
+  Dockerizing-sha:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -26,13 +25,24 @@ jobs:
         run: |
           docker buildx build --tag $DH_REPO:$GITHUB_SHA -f Dockerfile .
 
-      - name: Docker push Storm server
+      - name: Docker push sha Storm server
         env:
           DH_REPO: "${{ secrets.DH_REPO }}"
           GITHUB_SHA: "${{ github.sha }}"
         run: |
           docker push $DH_REPO:$GITHUB_SHA
-
+  
+  Dockerizing-production-image:
+    if: github.ref_name == 'main'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Docker Login
+        env:
+          DOCKER_USER: "${{ secrets.DOCKER_USER }}"
+          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+        run: |
+          docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
       - name: Dockerize Storm-Server
         env:
           DH_REPO: "${{ secrets.DH_REPO }}"

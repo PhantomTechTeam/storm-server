@@ -37,8 +37,7 @@ def run_runner(topic: str, engine_args, rm):
         do_generate_article=True,
         do_polish_article=True,
     )
-    
+
     runner.post_run()
     runner.summary()
     return runner.article_output_dir
-

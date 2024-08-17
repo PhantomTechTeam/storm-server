@@ -23,7 +23,3 @@ class Supabase:
             self.supabase_bucket
         ).get_public_url(f"{user_id}/{pdf_name}")
         return public_url
-
-
-
-

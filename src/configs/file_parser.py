@@ -33,11 +33,13 @@ def parse_file(output_dir: str):
         for url, unified_index in url_unified_index.items():
             if unified_index not in urls_to_unified_indexes.keys():
                 urls_to_unified_indexes[unified_index] = url
-        
+
         result = {
             "content": final_results,
-            "urls_to_unified_index": OrderedDict(sorted(urls_to_unified_indexes.items())),
-            "statusCode": 200
+            "urls_to_unified_index": OrderedDict(
+                sorted(urls_to_unified_indexes.items())
+            ),
+            "statusCode": 200,
         }
 
         rmtree(output_dir)
@@ -45,10 +47,6 @@ def parse_file(output_dir: str):
         result = {
             "content": f"Error parsing file, error is: {e}",
             "urls_to_unified_index": {},
-            "statusCode": 500
+            "statusCode": 500,
         }
     return result
-
-
-
-    

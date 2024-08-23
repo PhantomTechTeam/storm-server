@@ -1,6 +1,7 @@
 from os import environ
 from fastapi import FastAPI
 from models.topic import TopicInput
+from models.topic_sse import TopicInputSSE
 from models.pdf import PdfInput
 from models.topic_serper import SerperInput
 from routes import create_article, upload_pdf
@@ -22,7 +23,9 @@ app.add_middleware(
 
 @app.post("/create-wiki-article/chatgpt35")
 def create_wiki_article(topic_input: TopicInput):
-    json_contents = create_article.create_article(topic=topic_input.topic, ai_model=topic_input.ai_model)
+    json_contents = create_article.create_article(
+        topic=topic_input.topic, ai_model=topic_input.ai_model, retriever_model=topic_input.retriever_model
+    )
     return JSONResponse(content=json_contents)
 
 
@@ -42,6 +45,16 @@ def create_wiki_article(topic_input: SerperInput):
         topic=topic_input.topic,
         query_params=topic_input.query_params,
         ai_model=topic_input.ai_model,
+    )
+    return StreamingResponse(json_contents, media_type="text/event-stream")
+
+@app.post("/create-wiki-article/sse")
+def create_wiki_article(topic_input: TopicInputSSE):
+    json_contents = create_article.create_article_sse(
+        topic=topic_input.topic,
+        retriever_model=topic_input.retriever_model,
+        ai_model=topic_input.ai_model,
+        user_id=topic_input.user_id
     )
     return StreamingResponse(json_contents, media_type="text/event-stream")
 

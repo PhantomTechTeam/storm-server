@@ -1,9 +1,11 @@
 from os import environ
 from knowledge_storm.lm import ClaudeModel
+from ..storm import lm_configs
 
 
 class Anthropic:
-    def __init__(self, lm_configs):
+    def __init__(self):
+        self.lm_configs = lm_configs
         self.simulator_lm = environ.get("ANTHROPIC_SIMULATOR_LM")
         self.asker_lm = environ.get("ANTHROPIC_ASKER_LM")
         self.gen_lm = environ.get("ANTHROPIC_GEN_LM")

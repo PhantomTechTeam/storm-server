@@ -7,6 +7,9 @@ from models.topic_serper import SerperInput
 from routes import create_article, upload_pdf
 from fastapi.responses import JSONResponse, StreamingResponse
 from fastapi.middleware.cors import CORSMiddleware
+from dotenv import load_dotenv
+
+load_dotenv()  # take environment variables from .env.
 
 app = FastAPI(
     title="Storm Server",
@@ -69,23 +72,13 @@ def create_wiki_article(topic_input: SerperInput):
     return JSONResponse(content=json_contents)
 
 
-@app.post("/create-wiki-article/sse/serper", tags=["server-side-streaming"])
-def create_wiki_article(topic_input: SerperInput):
-    json_contents = create_article.create_article_sse_serper(
-        topic=topic_input.topic.lower(),
-        query_params=topic_input.query_params,
-        ai_model=topic_input.ai_model,
-    )
-    return StreamingResponse(json_contents, media_type="text/event-stream")
-
-
 @app.post("/create-wiki-article/sse", tags=["server-side-streaming"])
 def create_wiki_article(topic_input: TopicInputSSE):
     json_contents = create_article.create_article_sse(
         topic=topic_input.topic.lower(),
-        retriever_model=topic_input.retriever_model,
-        ai_model=topic_input.ai_model,
-        user_id=topic_input.user_id,
+        retriever_model=topic_input.query_params.get("retriever_model"),
+        ai_model=topic_input.query_params.get("ai_model"),
+        user_id=topic_input.query_params.get("user_id"),
     )
     return StreamingResponse(json_contents, media_type="text/event-stream")
 

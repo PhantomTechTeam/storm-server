@@ -4,7 +4,8 @@ from knowledge_storm.lm import OllamaClient
 
 
 class Ollama:
-    def __init__(self, lm_configs=lm_configs, ollama_kwargs=None):
+    def __init__(self, ollama_kwargs=None):
+        self.lm_configs = lm_configs
         self.conv_simulator_lm = OllamaClient(max_tokens=500, **ollama_kwargs)
         self.question_asker_lm = OllamaClient(max_tokens=500, **ollama_kwargs)
         self.outline_gen_lm = OllamaClient(max_tokens=400, **ollama_kwargs)

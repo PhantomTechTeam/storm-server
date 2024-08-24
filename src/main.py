@@ -7,9 +7,6 @@ from models.topic_serper import SerperInput
 from routes import create_article, upload_pdf
 from fastapi.responses import JSONResponse, StreamingResponse
 from fastapi.middleware.cors import CORSMiddleware
-from dotenv import load_dotenv
-
-load_dotenv()  # take environment variables from .env.
 
 app = FastAPI(
     title="Storm Server",

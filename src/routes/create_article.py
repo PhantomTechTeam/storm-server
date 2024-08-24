@@ -329,7 +329,7 @@ def create_article_sse(topic: str, ai_model: str, retriever_model: str, user_id:
             content = []
             with open(f"{directory}/storm_gen_article_polished.txt", "r+") as f:
                 content.append(str(f.read()))
-            print("File polished has been parsed!")
+            print(f"File polished in directory {directory} has been parsed!")
             escapable_str_with_comma = '","'
 
             escapable_str_without_comma = '"'

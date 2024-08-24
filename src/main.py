@@ -52,7 +52,7 @@ tags_metadata = [
 @app.post("/create-wiki-article/chatgpt35", tags=["creating-articles"])
 def create_wiki_article(topic_input: TopicInput):
     json_contents = create_article.create_article(
-        topic=topic_input.topic,
+        topic=topic_input.topic.lower(),
         ai_model=topic_input.ai_model,
         retriever_model=topic_input.retriever_model,
     )
@@ -62,7 +62,7 @@ def create_wiki_article(topic_input: TopicInput):
 @app.post("/create-wiki-article/serper", tags=["creating-articles"])
 def create_wiki_article(topic_input: SerperInput):
     json_contents = create_article.create_article_serper(
-        topic=topic_input.topic,
+        topic=topic_input.topic.lower(),
         query_params=topic_input.query_params,
         ai_model=topic_input.ai_model,
     )
@@ -72,7 +72,7 @@ def create_wiki_article(topic_input: SerperInput):
 @app.post("/create-wiki-article/sse/serper", tags=["server-side-streaming"])
 def create_wiki_article(topic_input: SerperInput):
     json_contents = create_article.create_article_sse_serper(
-        topic=topic_input.topic,
+        topic=topic_input.topic.lower(),
         query_params=topic_input.query_params,
         ai_model=topic_input.ai_model,
     )
@@ -82,7 +82,7 @@ def create_wiki_article(topic_input: SerperInput):
 @app.post("/create-wiki-article/sse", tags=["server-side-streaming"])
 def create_wiki_article(topic_input: TopicInputSSE):
     json_contents = create_article.create_article_sse(
-        topic=topic_input.topic,
+        topic=topic_input.topic.lower(),
         retriever_model=topic_input.retriever_model,
         ai_model=topic_input.ai_model,
         user_id=topic_input.user_id,

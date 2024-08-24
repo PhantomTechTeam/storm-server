@@ -7,4 +7,3 @@ class SerperInput(BaseModel):
     ai_model: str = Field(
         examples=["gpt-3.5", "gpt-4-o", "mixed-openai", "claude"], default="gpt-4-o"
     )
-    

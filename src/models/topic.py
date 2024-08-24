@@ -7,5 +7,6 @@ class TopicInput(BaseModel):
         examples=["gpt-3.5", "gpt-4-o", "mixed-openai", "claude"], default="gpt-4-o"
     )
     retriever_model: str = Field(
-        examples=["you", "serper", "brave", "searxng", "duckduckgo"], default="duckduckgo"
+        examples=["you", "serper", "brave", "searxng", "duckduckgo"],
+        default="duckduckgo",
     )

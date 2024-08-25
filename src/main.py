@@ -14,7 +14,7 @@ app = FastAPI(
     version="0.0.1",
     contact={
         "name": "Abrahan",
-        "url": "https://github.com/zenith110",
+        "url": "https://github.com/PhantomTechTeam/storm-server",
         "email": "abrahannevarez@gmail.com",
     },
     license_info={

@@ -20,7 +20,6 @@ class OpenAI:
         self.lm_configs.set_article_polish_lm(gpt_35)
 
     def setup_mix_gpt(self, openai_kwargs):
-        openai_kwargs = openai_kwargs or {}
         gpt_35 = OpenAIModel(model="gpt-3.5-turbo", max_tokens=500, **openai_kwargs)
         gpt_4 = OpenAIModel(model="gpt-4-o", max_tokens=3000, **openai_kwargs)
         self.lm_configs.set_conv_simulator_lm(gpt_35)
@@ -30,7 +29,6 @@ class OpenAI:
         self.lm_configs.set_article_polish_lm(gpt_4)
 
     def setup_gpt_4_o(self, openai_kwargs=None):
-        openai_kwargs = openai_kwargs or {}
         gpt_4 = OpenAIModel(model="gpt-4-o", max_tokens=3000, **openai_kwargs)
         self.lm_configs.set_conv_simulator_lm(gpt_4)
         self.lm_configs.set_question_asker_lm(gpt_4)

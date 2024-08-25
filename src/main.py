@@ -49,15 +49,14 @@ tags_metadata = [
 ]
 
 
-@app.post("/create-wiki-article/chatgpt35", tags=["creating-articles"])
+@app.post("/create-wiki-article", tags=["creating-articles"])
 def create_wiki_article(topic_input: TopicInput):
     json_contents = create_article.create_article(
         topic=topic_input.topic.lower(),
-        ai_model=topic_input.ai_model,
-        retriever_model=topic_input.retriever_model,
+        retriever_model=topic_input.query_params.get("retriever_model"),
+        ai_model=topic_input.query_params.get("ai_model"),
     )
     return JSONResponse(content=json_contents)
-
 
 @app.post("/create-wiki-article/serper", tags=["creating-articles"])
 def create_wiki_article(topic_input: SerperInput):

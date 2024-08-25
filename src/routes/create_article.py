@@ -417,7 +417,7 @@ def create_article_sse(topic: str, ai_model: str, retriever_model: str, user_id:
         yield json.dumps(
             {
                 "event_id": 1,
-                "message": "Failed to create article",
+                "message": f"Failed to create article, error is {e}",
                 "current_progress": "0",
                 "is_done": True,
                 "status_code": 500,

@@ -238,25 +238,23 @@ def create_article_sse(topic: str, ai_model: str, retriever_model: str, user_id:
                 "status_code": 200,
             }
         ) + "\n\n"
-        output_dir_original = argparser.parser.get("output_dir")
-        max_conv_turn = argparser.parser.get("max_conv_turn")
-        max_perspective = argparser.parser.get("max_perspective")
-        search_top_k = argparser.parser.get("search_top_k")
-        max_thread_num = argparser.parser.get("max_thread_num")
+        output_dir_original = os.environ.get("OUTPUT_DIR")
+        max_conv_turn = os.environ.get("MAX_CONV_TURN")
+        max_perspective = os.environ.get("MAX_PERSPECTIVE")
+        search_top_k = os.environ.get("SEARCH_TOP_K")
+        max_thread_num = os.environ.get("MAX_THREAD_NUM")
         print(
             f"max conv turn: {max_conv_turn}\nmax perspective: {max_perspective}\nsearch_top_k: {search_top_k}\nmax_thread_num: {max_thread_num}"
         )
         # Check out the STORMWikiRunnerArguments class for more configurations.
         engine_args = STORMWikiRunnerArguments(
-            output_dir=f"{output_dir_original}",
+            output_dir=output_dir_original,
             max_conv_turn=int(str(max_conv_turn)),
             max_perspective=int(
-                str(
-                    max_perspective,
-                )
+                    max_perspective
             ),
-            search_top_k=int(str(search_top_k)),
-            max_thread_num=int(str(max_thread_num)),
+            search_top_k=int(search_top_k),
+            max_thread_num=int(max_thread_num),
         )
         print("Successfully set up engine args")
         match retriever_model:

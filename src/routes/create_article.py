@@ -164,7 +164,7 @@ def create_article_serper(topic: str, query_params: dict[str, str], ai_model: st
     return json_contents
 
 
-def create_article_sse(topic: str, ai_model: str, retriever_model: str, user_id: str):
+def create_article_sse(topic: str, ai_model: str, retriever_model: str, user_id: str, query_params: dict[str, str]):
     try:
         from configs import argparser
         from shutil import rmtree
@@ -239,10 +239,10 @@ def create_article_sse(topic: str, ai_model: str, retriever_model: str, user_id:
             }
         ) + "\n\n"
         output_dir_original = os.environ.get("OUTPUT_DIR")
-        max_conv_turn = os.environ.get("MAX_CONV_TURN")
-        max_perspective = os.environ.get("MAX_PERSPECTIVE")
-        search_top_k = os.environ.get("SEARCH_TOP_K")
-        max_thread_num = os.environ.get("MAX_THREAD_NUM")
+        max_conv_turn = query_params.get("max_conv_turn")
+        max_perspective = query_params.get("max_perspective")
+        search_top_k = query_params.get("search_top_k")
+        max_thread_num = query_params.get("max_thread_num")
         print(
             f"max conv turn: {max_conv_turn}\nmax perspective: {max_perspective}\nsearch_top_k: {search_top_k}\nmax_thread_num: {max_thread_num}"
         )
